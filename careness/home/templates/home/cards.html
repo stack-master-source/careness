@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <script>
+        const CSRF = document.getElementsByName("csrf-token")[0].content;
+        const HOME_LINK = "/home";
+    </script>
+</head>
+<body>
+    <form>
+        <select id="city">
+            {% for city in cities %}
+                <option value="{{ city.pk }}">{{ city.fields.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="link" placeholder="Product link">
+        <input type="number" name="count" placeholder="Count">
+        <input type="text" name="date" placeholder="20:00:00 01.02.2003">
+        <button type="button" onclick="create_card();">Create</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const create_card = async () => {
+            let city = document.querySelector("#city").value,
+                product_link = document.getElementsByName("link")[0].value,
+                product_count = document.getElementsByName("count")[0].value,
+                date = document.getElementsByName("date")[0].value;
+
+            await $.ajax({
+                method: "POST",
+                url: "/home/cards/",
+                headers: {"X-CSRFToken": CSRF},
+                data: {"city": city, "product_link": product_link, "product_count": product_count, "date": date}
+            })
+            .then(res => console.log(res))
+            .catch(err => console.error(err))
+        }
+    </script>
+</body>
+</html>
