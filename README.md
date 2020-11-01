@@ -16,3 +16,6 @@
 
 ### Можете зарегестрировать, либо войти в этот аккаунт:
 - Testacc:123321123
+
+### Мониторниг системы
+![Supervisor](https://github.com/stack-master-source/careness/blob/main/docs/supervisor.png)
