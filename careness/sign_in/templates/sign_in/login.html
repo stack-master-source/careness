@@ -1,36 +1,43 @@
-{% extends 'careness/master.html' %}
+{% extends 'layouts/master.html' %}
 
 {% block styles %}
     {% load static %}
     <link rel="stylesheet" href="{% static 'sign_in/css/login.css' %}">
 {% endblock %}
 
+{% block navbar %}
+    {% include 'layouts/navbar.html' %}
+{% endblock %}
+
 {% block content %}
-    <div class="sidenav">
-         <div class="login-main-text">
-            <h2>Login or register</h2>
-             <p>For get more content</p>
-         </div>
-      </div>
-      <div class="main">
-         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-                <div class="alert"></div>
-                <form>
-                  <div class="form-group">
-                     <label>User Name</label>
-                     <input type="text" class="form-control" placeholder="User Name" name="username" id="username">
-                  </div>
-                  <div class="form-group">
-                     <label>Password</label>
-                     <input type="password" class="form-control" placeholder="Password" name="password" id="password">
-                  </div>
-                  <button type="button" class="btn btn-primary" onclick="login(username.value, password.value)">Login</button>
-                  <a href="{% url 'register' %}" class="btn btn-secondary">Register</a>
-                </form>
-            </div>
-         </div>
-      </div>
+    <div class="main">
+        <div class="login-form">
+            <h2 class="login-title">
+                Войти в аккаунт
+            </h2>
+            <div class="alert"></div>
+            <form>
+                <div class="form-item">
+                    <label>Имя пользователя</label>
+                    <input type="text" placeholder="Имя пользователя" name="username" id="username">
+                </div>
+                <div class="form-item">
+                    <label>Пароль</label>
+                    <input type="password" placeholder="Пароль" name="password" id="password">
+                </div>
+                <div class="form-item">
+                    <button type="button" class="login-button"
+                    onclick="login(username.value, password.value)">Войти</button>
+                    <p class="form-signin">
+                        Нет аккаунта? <a href="{% url 'register' %}" class="btn btn-secondary">Зарегистрироватся</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="right-banner">
+            <img class="right-banner__svg" src="{% static 'sign_in/assets/banner.svg' %}" alt="banner">
+        </div>
+    </div>
 {% endblock %}
 
 {% block scripts %}

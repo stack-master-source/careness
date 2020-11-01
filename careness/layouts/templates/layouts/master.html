@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@900&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <script>
+        const CSRF = document.getElementsByName("csrf-token")[0].content;
+        const HOME_LINK = "/home";
+    </script>
+
+    {% block title %}
+        <title>{{ title }}</title>
+    {% endblock %}
+
+    {% block styles %}
+        <!-- Connect styles here -->
+    {% endblock %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'layouts/master.css' %}">
+    <link rel="stylesheet" href="{% static 'layouts/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'layouts/adaptive.css' %}">
+</head>
+<body>
+    {% block navbar %}
+        <!-- Write navbar content here -->
+    {% endblock %}
+
+    {% block content %}
+        <!-- Write html content here -->
+    {% endblock %}
+
+    {% block scripts %}
+        <!-- Write JS scripts here -->
+    {% endblock %}
+</body>
+</html>

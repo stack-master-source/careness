@@ -9,16 +9,10 @@ class IsAuthMiddleware:
     def __call__(self, request):
         response = self.get_response(request)
 
-        if (
-            request.user.is_authenticated
-            and request.path == reverse("login")
-        ):
+        if request.user.is_authenticated and request.path == reverse("login"):
             return redirect("home")
 
-        if (
-            request.user.is_authenticated
-            and request.path == reverse("register")
-        ):
+        if request.user.is_authenticated and request.path == reverse("register"):
             return redirect("home")
 
         return response

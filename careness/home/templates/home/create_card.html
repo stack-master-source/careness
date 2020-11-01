@@ -1,0 +1,61 @@
+{% extends 'layouts/master.html' %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/css/create_card.css' %}">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="create-post">
+        <h2 class="create-post__title">
+            Создать объявление
+        </h2>
+        <form action="" class="create-post__form">
+            <div class="create-post__item">
+                <label>Имя товара</label>
+                <input type="text" placeholder="" name="productname" id="productname">
+            </div>
+            <div class="create-post__item">
+                <label>Срок объявления - до ДД.ММ.ГГ</label>
+                <input type="text" id="date" placeholder="2003-01-02 01:00:00">
+            </div>
+            <div class="create-post__item">
+                <label>Город</label>
+                <select id="city">
+                    {% for city in cities %}
+                        <option value="{{ city.pk }}">{{ city.fields.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="create-post__item">
+                <label>Номер телефона</label>
+                <input type="text" placeholder="" id="tel_number">
+            </div>
+            <div class="create-post__item">
+                <label>Ссылка товара</label>
+                <input type="text" placeholder="" id="product_link">
+            </div>
+            <div class="create-post__item">
+                <label>Количество</label>
+                <input type="number" id="count">
+            </div>
+            <div class="create-post__item form-commentary">
+                <label>Комментарий</label>
+                <textarea id="comment" cols="30" rows="10" maxlength="120" ></textarea>
+            </div>
+            <button class="create-post__button" type="button" onclick="create_card();">
+                Отправить
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static '/home/js/create_card.js' %}"></script>
+{% endblock %}

@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
-
 logger = logging.getLogger(__name__)
 
 
