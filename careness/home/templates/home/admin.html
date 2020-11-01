@@ -1,0 +1,177 @@
+{% extends 'layouts/master.html' %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/css/admin.css' %}">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="modal" id="hidden">
+        <div class="modal-window">
+            <span class="btn-close" onclick="close_modal();">
+                закрыть
+            </span>
+            <form class="modal-form">
+                <div class="modal-item product-name">
+                    <label>Имя товара</label>
+                    <input type="text" placeholder="" name="productname" id="productname">
+                </div>
+                <div class="modal-item">
+                    <label>Город</label>
+                    <select id="city">
+                        {% for city in cities %}
+                            <option value="{{ city.pk }}">{{ city.fields.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-item">
+                    <label>Номер телефона</label>
+                    <input type="phone" placeholder="" id="tel_number">
+                </div>
+                <div class="modal-item">
+                    <label>Ссылка товара</label>
+                    <input type="text" placeholder="" id="product_link">
+                </div>
+                <div class="modal-item">
+                    <label>Количество</label>
+                    <input type="number" id="count">
+                </div>
+                <div class="modal-item form-commentary">
+                    <label>Комментарий</label>
+                    <textarea cols="30" rows="10" id="comment" maxlength="120"></textarea>
+                </div>
+                <button class="modal-button" type="button" onclick="update_card(this.id);">
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="adminpage">
+        <div class="account">
+            <img src="https://picsum.photos/200/300" alt="">
+            <div class="account-name">
+                {{ user.get_username }}
+            </div>
+        </div>
+        <div class="announcement">
+            <h3 class="announcement-title">
+                Мои объявления
+            </h3>
+
+            {% if not cards %}
+                <div class="announcement-card">
+                    Тут пока что ничего нет...
+                </div>
+            {% endif %}
+
+            {% for card in cards %}
+                <div class="announcement-card">
+                    <div class="announcement-card__left">
+                        <p class="card-name">
+                            {{ user.get_username }}
+                        </p>
+                        <p class="card-location">
+                            г. {{ card.fields.city }}
+                        </p>
+                        <img src="{% static 'home/assets/drug.png' %}" alt="" class="card-photo">
+                    </div>
+                    <div class="announcement-card__center">
+                        <p class="card-number">
+                            {{ card.fields.tel_number }}
+                        </p>
+                        <p class="card-title">
+                            {{ card.fields.name }}
+                        </p>
+                        <p class="card-link">
+                            <a href="{{ card.fields.product_link }}">{{ card.fields.product_link }}</a>
+                        </p>
+                        <p class="card-amount">
+                            <span class="red">Количество:</span> {{ card.fields.count }}
+                        </p>
+                    </div>
+                    <div class="announcement-card__right">
+                        <div class="card-edit">
+                            <a onclick="display_modal(this.id, 'card');" id="{{ card.pk }}">
+                                <span class="iconify" data-icon="teenyicons:edit-circle-outline" data-inline="false" style="color: #04AA14;"
+                                data-width="33"></span>
+                            </a>
+                            <a onclick="delete_card('{{ card.pk }}');">
+                                <span class="iconify" data-icon="mdi:delete-circle-outline" data-inline="false" style="color: #C02626;" data-width="33"></span>
+                            </a>
+                        </div>
+                        <p class="card-description">
+                            “{{ card.fields.comment }}”
+                        </p>
+                    </div>
+                </div>
+            <br><br>
+            {% endfor %}
+        </div>
+        <br>
+        <br> <br>
+
+        <div class="announcement">
+            <h3 class="announcement-title">
+                Мои ответы
+            </h3>
+            {% if not sub_cards %}
+                <div class="announcement-card">
+                    Тут пока что ничего нет...
+                </div>
+            {% endif %}
+
+            {% for sub_card in sub_cards %}
+                <div class="announcement-card">
+                    <div class="announcement-card__left">
+                        <p class="card-name">
+                            {{ user.get_username }}
+                        </p>
+                        <p class="card-location">
+                            г. {{ sub_card.fields.city }}
+                        </p>
+                        <img src="{% static 'home/assets/drug.png' %}" alt="" class="card-photo">
+                    </div>
+                    <div class="announcement-card__center">
+                        <p class="card-number">
+                            {{ sub_card.fields.tel_number }}
+                        </p>
+                        <p class="card-title">
+                            {{ sub_card.fields.name }}
+                        </p>
+                        <p class="card-link">
+                            <a href="{{ sub_card.fields.product_link }}">{{ sub_card.fields.product_link }}</a>
+                        </p>
+                        <p class="card-amount">
+                            <span class="red">Количество:</span> {{ sub_card.fields.count }}
+                        </p>
+                    </div>
+                    <div class="announcement-card__right">
+                        <div class="card-edit">
+                            <a onclick="display_modal(this.id, 'sub_card');" id="{{ sub_card.pk }}">
+                                <span class="iconify" data-icon="teenyicons:edit-circle-outline" data-inline="false" style="color: #04AA14;"
+                                data-width="33"></span>
+                            </a>
+                            <a onclick="delete_sub_card('{{ sub_card.pk }}');">
+                                <span class="iconify" data-icon="mdi:delete-circle-outline" data-inline="false" style="color: #C02626;" data-width="33"></span>
+                            </a>
+                        </div>
+                        <p class="card-description">
+                            “{{ sub_card.fields.comment }}”
+                        </p>
+                    </div>
+                </div>
+                <br><br>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static '/home/js/admin.js' %}"></script>
+{% endblock %}

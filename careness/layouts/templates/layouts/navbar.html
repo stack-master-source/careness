@@ -1,0 +1,188 @@
+<style>
+    .header {
+  height: 100px;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid #494949; }
+  .header-wrapper {
+    display: -ms-grid;
+    display: grid;
+    max-width: 1366px;
+    width: 100%;
+    -ms-grid-columns: .5fr 1fr;
+    grid-template-columns: .5fr 1fr;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    height: 100%; }
+  .header-title {
+    font-family: Nunito Sans;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 2rem;
+    color: #494949; }
+  .header-enter {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    min-width: 300px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+    .header-enter__register {
+      color: #E44764;
+      font-size: 1.125em;
+      border: none;
+      background: none;
+      cursor: pointer;
+      -webkit-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s;
+      height: -webkit-min-content;
+      height: -moz-min-content;
+      height: min-content;
+      border-radius: 10px; }
+    .header-enter__login {
+      color: #494949;
+      font-size: 1.125rem;
+      border: 1px solid #E44764;
+      padding: 15px 10px;
+      border-radius: 5px;
+      background: none;
+      cursor: pointer;
+      -webkit-transition: all .3s;
+      -o-transition: all .3s;
+      transition: all .3s; }
+    .header-enter__login:hover, .header-enter-login:active {
+      color: white;
+      -webkit-box-shadow: inset -5.5em 0 0 0 #E44764, inset 5.5em 0 0 0 #E44764;
+      box-shadow: inset -5.5em 0 0 0 #E44764, inset 5.5em 0 0 0 #E44764; }
+    .header-enter__register:hover, .header-enter-register:active {
+      color: #494949;
+      -webkit-animation: pulse 1s;
+      animation: pulse 1s;
+      -webkit-box-shadow: 0 0 0 1em rgba(255, 255, 255, 0);
+      box-shadow: 0 0 0 1em rgba(255, 255, 255, 0); }
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 #E44764;
+    box-shadow: 0 0 0 0 #E44764; } }
+
+@keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 #E44764;
+    box-shadow: 0 0 0 0 #E44764; } }
+  .header-nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%; }
+  .header ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    width: 450px;
+    font-size: 1.125rem;
+    list-style-type: none; }
+  .header a {
+    color: #494949;
+    font-size: 1.125rem;
+    text-decoration: none;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    transition: all .3s; }
+  .header a:hover {
+    color: #E44764; }
+  .hidden {
+    display: none;
+  }
+  .block {
+    display: block;
+  }
+  .dropdown {
+      position: relative;
+      display: inline-block;
+      color: black !important;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 240px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      padding: 12px 16px;
+      z-index: 3;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+</style>
+<header class="header">
+    <div class="header-wrapper">
+        <p class="header-title">
+            zakaz.kz
+        </p>
+        <nav class="header-nav">
+            <ul>
+                <li class="header-nav__item"><a href="{% url 'home' %}">
+                        Главная
+                    </a></li>
+                <li class="header-nav__item"><a href="{% url 'cards' %}">
+                        Объявления
+                    </a></li>
+                <li class="header-nav__item"><a href="{% url 'cards_create' %}">
+                        Создать объявление
+                    </a></li>
+            </ul>
+
+            {% if not user.is_authenticated %}
+                <div class="header-enter">
+                    <button class="header-enter__register" onclick="window.location.href='{% url 'login' %}'">
+                        Вход
+                    </button>
+                    <button class="header-enter__login" onclick="window.location.href='{% url 'register' %}'">
+                        Зарегистрироватся
+                    </button>
+                </div>
+            {% else %}
+                <div class="header-enter" style="display: grid;">
+                    <div class="dropdown header-enter__login">
+                        <span>{{ user.get_username }} ▼</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'dash' %}">Личный кабинет</a>
+                            <br>
+                            <a href="{% url 'logout' %}">Выйти из аккаунта</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </nav>
+    </div>
+</header>

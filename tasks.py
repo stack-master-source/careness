@@ -3,7 +3,7 @@ import invoke
 from pathlib import Path
 
 
-PACKAGE = "careness_api"
+PACKAGE = "careness"
 FORMAT_PACKAGES = ""
 REQUIRED_COVERAGE = 90
 BASE_DIR = Path(__file__).resolve().parent
@@ -17,9 +17,9 @@ def install(arg):
 @invoke.task(name="format")
 def format_(arg):
     autoflake = "autoflake -i --recursive --remove-all-unused-imports --remove-duplicate-keys --remove-unused-variables"
-    arg.run(f"{autoflake} {PACKAGE} {FORMAT_PACKAGES} tests", echo=True)
-    arg.run(f"isort {PACKAGE} {FORMAT_PACKAGES} tests", echo=True)
-    arg.run(f"black {PACKAGE} {FORMAT_PACKAGES} tests", echo=True)
+    arg.run(f"{autoflake} {PACKAGE} {FORMAT_PACKAGES}", echo=True)
+    arg.run(f"isort {PACKAGE} {FORMAT_PACKAGES}", echo=True)
+    arg.run(f"black {PACKAGE} {FORMAT_PACKAGES}", echo=True)
 
 
 @invoke.task(
@@ -30,9 +30,9 @@ def format_(arg):
 )
 def check(arg, style=True, typing=True):
     if style:
-        arg.run(f"flake8 {PACKAGE} tests", echo=True)
-        arg.run(f"isort --diff {PACKAGE} tests --check-only", echo=True)
-        arg.run(f"black --diff {PACKAGE} tests --check", echo=True)
+        arg.run(f"flake8 {PACKAGE}", echo=True)
+        arg.run(f"isort --diff {PACKAGE} --check-only", echo=True)
+        arg.run(f"black --diff {PACKAGE} --check", echo=True)
     if typing:
         arg.run(f"mypy --no-incremental --cache-dir=/dev/null {PACKAGE} tests", echo=True)
 

@@ -1,44 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="csrf-token" content="{{ csrf_token }}">
-    <script>
-        const CSRF = document.getElementsByName("csrf-token")[0].content;
-        const HOME_LINK = "/home";
-    </script>
-</head>
-<body>
-    <form>
-        <select id="city">
-            {% for city in cities %}
-                <option value="{{ city.pk }}">{{ city.fields.name }}</option>
-            {% endfor %}
-        </select>
-        <input type="text" name="link" placeholder="Product link">
-        <input type="number" name="count" placeholder="Count">
-        <input type="text" name="date" placeholder="20:00:00 01.02.2003">
-        <button type="button" onclick="create_card();">Create</button>
-    </form>
+{% extends 'layouts/master.html' %}
 
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/css/cards.css' %}">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <input type="hidden" name="current_card_id">
+    <div class="modal" id="hidden">
+        <div class="modal-window">
+            <span class="btn-close" onclick="close_modal_();">
+                закрыть
+            </span>
+            <form class="modal-form">
+                <div class="modal-item product-name">
+                    <label>Имя товара</label>
+                    <input type="text" placeholder="" name="productname" id="productname">
+                </div>
+                <div class="modal-item">
+                    <label>Номер телефона</label>
+                    <input type="phone" placeholder="" id="tel_number">
+                </div>
+                <div class="modal-item">
+                    <label>Ссылка товара</label>
+                    <input type="text" placeholder="" id="product_link">
+                </div>
+                <div class="modal-item">
+                    <label>Количество</label>
+                    <input type="number" id="count">
+                </div>
+                <div class="modal-item form-commentary">
+                    <label>Комментарий</label>
+                    <textarea cols="30" rows="10" id="comment" maxlength="120"></textarea>
+                </div>
+                <button class="modal-button" type="button" onclick="create_sub_card(this.id);">
+                    Отправить
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="all-posts__modal" >
+        <div class="modal-sidebar">
+
+        </div>
+    </div>
+    <section class="all-posts">
+        {% for card in cards %}
+            <div class="announcement-card">
+                <div class="announcement-card__left">
+                    <p class="card-name">
+                        {{ card.fields.user.fields.username }}
+                    </p>
+                    <p class="card-location" id="city_{{ card.pk }}">
+                        г. {{ card.fields.city.fields.name }}
+                    </p>
+                    <img src="{% static 'home/assets/drug.png' %}" alt="" class="card-photo">
+                </div>
+                <div class="announcement-card__center">
+                    <p class="card-number">
+                        {{ card.fields.tel_number }}
+                    </p>
+                    <p class="card-title">
+                        {{ card.fields.name }}
+                    </p>
+                    <a href="{{ card.fields.product_link }}" class="card-link">
+                        {{ card.fields.product_link }}
+                    </a>
+                    <p class="card-amount">
+                        <span class="red">Количество:</span> {{ card.fields.count }}
+                    </p>
+                </div>
+                <div class="announcement-card__right">
+                    <p class="card-description">
+                        “{{ card.fields.comment }}”
+                    </p>
+                    <div class="card-lower">
+                        <button class="card-button" onclick="get_sub_cards('{{ card.pk }}')">
+                            Ответить <span style="margin-left: 10px;" class="iconify reply-icon" data-icon="entypo:reply"
+                                data-inline="false"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        const create_card = async () => {
-            let city = document.querySelector("#city").value,
-                product_link = document.getElementsByName("link")[0].value,
-                product_count = document.getElementsByName("count")[0].value,
-                date = document.getElementsByName("date")[0].value;
-
-            await $.ajax({
-                method: "POST",
-                url: "/home/cards/",
-                headers: {"X-CSRFToken": CSRF},
-                data: {"city": city, "product_link": product_link, "product_count": product_count, "date": date}
-            })
-            .then(res => console.log(res))
-            .catch(err => console.error(err))
-        }
-    </script>
-</body>
-</html>
+    <script src="{% static '/home/js/cards.js' %}"></script>
+{% endblock %}

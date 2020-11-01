@@ -1,0 +1,89 @@
+{% extends 'layouts/master.html' %}
+
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/css/home.css' %}">
+{% endblock %}
+
+{% block navbar %}
+    {% include 'layouts/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="frontpage">
+        <div class="frontpage-head">
+            <div class="frontpage-head__content">
+                <h1 class="frontpage-title">
+                    Объединяйтесь чтобы помогать друг другу
+                </h1>
+                <p class="frontpage-subtitle">
+                    Наш сервис предлагает вам спектор услуг, для более легкого заказа лекарств и развивающих товаров
+                </p>
+            </div>
+            <div class="frontpage-head__img">
+                <img src="{% static 'home/assets/front-banner.svg' %}" alt="banner">
+            </div>
+        </div>
+        <main class="frontpage-main">
+            <section class="order">
+                <div class="order-card">
+                    <div class="order-card__left">
+                        <p class="card-name">
+                            Шилибеков Ансар
+                        </p>
+                        <p class="card-location">
+                            г. Тараз, iHerb.com
+                        </p>
+                        <img src="{% static 'home/assets/drug.png'" alt="" class="card-photo">
+                    </div>
+                    <div class="order-card__right">
+                        <p class="card-number">
+                            +7 (777) 777 77 77
+                        </p>
+                        <p class="card-title">
+                            Now Foods, Высокоактивный витамин D-3, 5000 МЕ, 240 мягких таблеток
+                        </p>
+                        <p class="card-link">
+                            https://ru.iherb.com/pr/Now-Foods-High-Potency-Vitamin-D-3-5-000-IU-240-Softgels/22335?rec=home
+                        </p>
+                        <p class="card-amount">
+                            <span class="red">Количество:</span> 2
+                        </p>
+                        <p class="card-description">
+                            “Собираюсь заказать 05.10, до бесплатной доставки не хватает 10 000 KZT, кто хочет оформить заказ в ближайшее время и с бесплатной доставкой, откликнитесь”
+                        </p>
+                        <button class="card-button" disabled>
+                            Ответить <span style="margin-left: 10px;" class="iconify reply-icon" data-icon="entypo:reply" data-inline="false"></span>
+                        </button>
+                    </div>
+                </div>
+                <ul class="order-text">
+                    <li class="order-text__item">Вы можете группироваться с людьми из своего города</li>
+                    <li class="order-text__item">Регулировать количество желаемого товара</li>
+                    <li class="order-text__item">И отвечать на объявления своими карточками!</li>
+                    <li class="order-text__item">Заказывать с одного сайта</li>
+                </ul>
+                <button class="order-button" onclick="window.location.href = '{% url 'cards' %}'">
+                    Перейти к объявлениям
+                </button>
+            </section>
+        </main>
+    </section>
+<footer class="footer">
+        <div class="footer-content">
+            <h4 class="footer-title">
+                POSITIVE TECH
+            </h4>
+            <p class="footer-subtitle">
+                usynys.kz
+            </p>
+            <!-- НЕ забудь активные линки -->
+            <ul class="footer-nav">
+                <li class="footer-item"><a href="{% url 'home' %}" class="footer-item__link">Главная</a></li>
+                <li class="footer-item"><a href="{% url 'cards' %}" class="footer-item__link">Объявления</a></li>
+                <li class="footer-item"><a href="{% url 'cards_create' %}" class="footer-item__link">Создать объявление</a></li>
+            </ul>
+        </div>
+        <img src="{% static 'home/assets/footer.svg' %}" alt="" class="footer-logo">
+    </footer>
+{% endblock %}
