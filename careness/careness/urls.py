@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path("careness/admin/", admin.site.urls),
-    path("careness/account/", include("sign_in.urls")),
-    path("careness/home/", include("home.urls")),
-    path("careness/layouts/", include("layouts.urls")),
+    path(f"careness/admin/", admin.site.urls),
+    path(f"careness/account/", include("sign_in.urls")),
+    path(f"careness/home/", include("home.urls")),
+    path(f"careness/layouts/", include("layouts.urls")),
 ]
