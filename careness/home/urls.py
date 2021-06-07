@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf.urls import url
 
 from .views import (
     cards_edit_view,
@@ -10,10 +11,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path(r"^$", home_view, name="home"),
-    path("cards/", cards_view, name="cards"),
-    path("sub_cards/", sub_card_view, name="sub_cards"),
-    path("cards/edit/", cards_edit_view, name="cards_edit"),
-    path("cards/create/", create_card_view, name="cards_create"),
-    path("dash/", dash_view, name="dash"),
+    url(r"^$", home_view, name="home"),
+    url("cards/", cards_view, name="cards"),
+    url("sub_cards/", sub_card_view, name="sub_cards"),
+    url("cards/edit/", cards_edit_view, name="cards_edit"),
+    url("cards/create/", create_card_view, name="cards_create"),
+    url("dash/", dash_view, name="dash"),
 ]
