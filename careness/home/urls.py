@@ -12,9 +12,9 @@ from .views import (
 
 urlpatterns = [
     url(r"^$", home_view, name="home"),
-    url("cards/", cards_view, name="cards"),
-    url("sub_cards/", sub_card_view, name="sub_cards"),
-    url("cards/edit/", cards_edit_view, name="cards_edit"),
-    url("cards/create/", create_card_view, name="cards_create"),
-    url("dash/", dash_view, name="dash"),
+    url("^cards/$", cards_view, name="cards"),
+    url("^sub_cards/$", sub_card_view, name="sub_cards"),
+    url("^cards/edit/$", cards_edit_view, name="cards_edit"),
+    url("^cards/create/$", create_card_view, name="cards_create"),
+    url("^dash/$", dash_view, name="dash"),
 ]
