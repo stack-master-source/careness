@@ -10,7 +10,7 @@ let productname = document.querySelector("#productname").value,
 
 await $.ajax({
     method: "POST",
-    url: "/home/cards/",
+    url: "/careness/home/cards/",
     headers: {"X-CSRFToken": CSRF},
     data: {
         "product_name": productname,
